@@ -1,10 +1,10 @@
 {
   "name": "subsai-app-backend",
   "version": "1.0.0",
-  "main": "SubsAI-app-backend/server.js",
+  "main": "server.js",
   "type": "module",
   "scripts": {
-    "start": "node SubsAI-app-backend/server.js"
+    "start": "node server.js"
   },
   "dependencies": {
     "express": "^4.18.2",
