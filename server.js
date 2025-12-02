@@ -7,5 +7,7 @@ app.get("/favicon.ico", (req, res) => res.status(204).end());
 
 const PORT = process.env.PORT || 3000;
 
-// IMPORTANT: bind to 0.0.0.0 so Railway can route external requests
-app.listen(PORT, "0.0.0.0", () => console.log(`Server running on port ${PORT}`));
+// BIND TO ALL INTERFACES
+app.listen(PORT, "0.0.0.0", () =>
+  console.log(`Server running on port ${PORT}`)
+);
