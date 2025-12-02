@@ -10,6 +10,17 @@ app.use(express.json());
 const { CLIENT_ID, CLIENT_SECRET, REDIRECT_URI } = process.env;
 
 // -----------------------------
+// Root & Health Routes
+// -----------------------------
+app.get("/", (req, res) => {
+    res.send("SubsAI Backend is running!");
+});
+
+app.get("/health", (req, res) => {
+    res.json({ status: "ok" });
+});
+
+// -----------------------------
 // Step 1: Get Google OAuth URL
 // -----------------------------
 app.get("/auth/url", (req, res) => {
@@ -83,7 +94,7 @@ app.post("/oauth/refresh", async (req, res) => {
 });
 
 // ------------------------------------------------------------
-// NEW: /channelStats — main YouTube analytics endpoint
+// /channelStats — main YouTube analytics endpoint
 // ------------------------------------------------------------
 app.get("/channelStats", async (req, res) => {
     const authHeader = req.headers.authorization;
@@ -93,7 +104,6 @@ app.get("/channelStats", async (req, res) => {
     const accessToken = authHeader.replace("Bearer ", "");
 
     try {
-        // 1. Get channel info
         const channelRes = await axios.get(
             "https://www.googleapis.com/youtube/v3/channels",
             {
@@ -112,7 +122,6 @@ app.get("/channelStats", async (req, res) => {
             return res.status(404).json({ error: "Channel not found" });
         }
 
-        // 2. Extract statistics
         const stats = channel.statistics;
         const snippet = channel.snippet;
 
@@ -134,7 +143,7 @@ app.get("/channelStats", async (req, res) => {
 });
 
 // ---------------------------
-// Start server (only once)
+// Start server
 // ---------------------------
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`SubsAI Backend is running on port ${PORT}`));
